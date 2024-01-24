@@ -11,12 +11,18 @@ pkgs.mkShell {
 
     SCRIPT_DIR=$PWD
 
-    if ! pgrep "ingress" > /dev/null; then
-      echo "Starting minikube"
-      minikube start
-      minikube addons enable ingress
+    minikube start
+    minikube addons enable ingress
 
-    fi
+    echo
+    echo 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 
+    echo 💡💡💡 General Consulting Dev Help 💡💡💡 
+    echo 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 
+    echo
+    echo run "minikube stop" to stop the cluster
+    echo
+    echo run "minikube dashboard" to bring up a general purpose web ui for monitoring your cluster.
+    echo 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 
   '';
   buildInputs = [];
 }

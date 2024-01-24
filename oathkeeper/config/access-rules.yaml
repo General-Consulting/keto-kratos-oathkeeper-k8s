@@ -42,7 +42,7 @@
           "namespace": "access",
           "object": "administration",
           "relation": "access",
-          "subject_id": "{{print .Extra.identity.traits.role }}"
+          "subject_id": "{{print .Extra.identity.id }}"
         }
   mutators:
     - handler: id_token
@@ -82,7 +82,7 @@
     url: "http://selfservice:4455"
     strip_path: /panel
   match:
-    url: "http://ory.test.info/panel/<{welcome,registration,verification,recovery,login,**.css,**.js,**.png}{/,}>"
+    url: "http://ory.test.info/panel/<{welcome,registration,verification,recovery,login,**.css,**.js,**.png,**.ttf,**.svg,**.woff,**.woff2}{/,}>"
     methods:
       - GET
   authenticators:
