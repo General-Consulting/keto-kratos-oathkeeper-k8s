@@ -25,11 +25,12 @@ $ nix default.nix
 
 # Create all resources
 $ ./build.sh | kubectl apply -f -
-
+```
 #### DNS Setup
 
 To create a nice dev experience you should map your cluster ip to the DNS referenced within the examples.  `kubectl get ingress`  will give you the IP, which should be added to your host file.
 
+```
 # waits for Keto to be ready and add policies
 $ ./add-keto-policies.sh | kubectl apply -f -
 $ kubectl get ingress
@@ -43,10 +44,10 @@ $ sudo bash -c 'cat << EOF >> /etc/hosts
 192.168.XXX.XXX    mail.test.info
 192.168.XXX.XXX    ory.test.info
 EOF'
+```
 
 
 #### Using
-```
 
 Open your browser and navigate to `http://ory.test.info/panel/welcome` and
 `http://mail.test.info`.
