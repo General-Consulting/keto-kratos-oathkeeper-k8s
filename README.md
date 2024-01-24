@@ -1,18 +1,13 @@
 # Ory Kratos, Keto, and Oathkeeper with Kubernetes
 
 This example show how create an SSO and ACL system with the Ory stack and
-Kubernetes.
+Kubernetes. It uses Nix to set up install kustomize and setup the minikube environment.
 
-Many thanks to [@pngouin](https://github.com/pngouin) for the the
-[original example](https://github.com/pngouin/k8s-ory-example) 🙌
+Adapted from [Ory examples repo](https://github.com/ory/examples/tree/master)
 
 ## Overview
 
-This example uses the
-[kratos-selfservice-ui-node](https://github.com/ory/kratos-selfservice-ui-node),
-a fork of [mailslurper](https://github.com/pngouin/mailslurper) and a
-[react-admin app](https://github.com/pngouin/react-admin-ory) for the _admin_
-page.
+This example uses the [kratos-selfservice-ui-node](https://github.com/ory/kratos-selfservice-ui-node), a fork of [mailslurper](https://github.com/pngouin/mailslurper) and a [react-admin app](https://github.com/pngouin/react-admin-ory) for the _admin_ page.
 
 ![schema](_assets/diagram.png) _(This is an outline and does not exactly reflect
 the reality of how the stack works)_
@@ -21,17 +16,19 @@ the reality of how the stack works)_
 
 ### Prerequisites
 
-- [minikube](https://minikube.sigs.k8s.io/docs/start/)
-- [kustomize](https://kubernetes-sigs.github.io/kustomize/installation/)
+- [nix](https://nixos.org/download)
 
 ### Run locally
 
 ```bash
-$ minikube start
-$ minikube addons enable ingress
+$ nix default.nix
 
 # Create all resources
 $ ./build.sh | kubectl apply -f -
+
+#### DNS Setup
+
+To create a nice dev experience you should map your cluster ip to the DNS referenced within the examples.  `kubectl get ingress`  will give you the IP, which should be added to your host file.
 
 # waits for Keto to be ready and add policies
 $ ./add-keto-policies.sh | kubectl apply -f -
@@ -47,6 +44,8 @@ $ sudo bash -c 'cat << EOF >> /etc/hosts
 192.168.XXX.XXX    ory.test.info
 EOF'
 
+
+#### Using
 ```
 
 Open your browser and navigate to `http://ory.test.info/panel/welcome` and
@@ -63,13 +62,7 @@ react app.
 | http://ory.test.info/admin/        | Admin react app, you need the role `admin` to access      |
 | http://mail.test.info              | Local mail panel, you will receive mail confirmation here |
 
-## Contribute
+#### Add keto relationships
 
-Feel free to
-[open a discussion](https://github.com/ory/examples/discussions/new) to provide
-feedback or talk about ideas, or
-[open an issue](https://github.com/ory/examples/issues/new) if you want to add
-your example to the repository or encounter a bug. You can contribute to Ory in
-many ways, see the
-[Ory Contributing Guidelines](https://www.ory.sh/docs/ecosystem/contributing)
-for more information.
+After you have created a user, using the identity.id as the subject, you can add relations into [./keto/keto-job/config/relation-tuples/admin-access.json](./keto/keto-job/config/relation-tuples/admin-access.json)
+
