@@ -22,18 +22,17 @@ spec:
           configMap:
             name: admin-ui-script
             defaultMode: 0777
+      imagePullSecrets:  
+        - name: dpr-secret 
       containers:
         - name: admin-ui
-          image: "pingouin/react-admin-kratos:latest"
+          image: "ghcr.io/dfoxg/kratos-admin-ui:v2.2.0"
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: admin-ui-env
           ports:
             - name: admin-ui
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
-          volumeMounts:
-            - name: script-volume
-              mountPath: /docker-entrypoint.d/40-rename.sh
-              subPath: 20-rename.sh
+

@@ -20,13 +20,14 @@ the reality of how the stack works)_
 
 ### Run locally
 
+#### Step 1 Bootstrap the cluster
 ```bash
 $ nix default.nix
 
 # Create all resources
 $ ./build.sh | kubectl apply -f -
 ```
-#### DNS Setup
+#### Step 2 DNS Setup
 
 To create a nice dev experience you should map your cluster ip to the DNS referenced within the examples.  `kubectl get ingress`  will give you the IP, which should be added to your host file.
 
@@ -45,6 +46,20 @@ $ sudo bash -c 'cat << EOF >> /etc/hosts
 192.168.XXX.XXX    ory.test.info
 EOF'
 ```
+
+
+#### (optional) Step 3 Create secret for fetching containers from ghcr.io
+
+This step is only necessary if your docker installation has not already done a `docker login` e.g. `docker pull ghcr.io/hello-world` fails.
+https://github.com/settings/tokens
+You can create a token (it must be "classic") [in your Personal Access Token settings on github](https://github.com/settings/tokens); which only needs the `read:packages` scope.
+
+
+
+```
+$ kubectl create secret docker-registry dpr-secret --docker-server=https://ghcr.io --docker-username=mygithubusername --docker-password=mygithubreadtoken --docker-email=mygithubemail
+```
+
 
 
 #### Using
