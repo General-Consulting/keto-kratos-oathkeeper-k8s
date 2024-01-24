@@ -1,0 +1,20 @@
+[
+  {
+    "namespace": "access",
+    "object": "administration",
+    "relation": "access",
+    "subject_id": "3d60a190-3c96-41e7-b177-3080df148ec2"
+  },
+  {
+    "namespace": "access",
+    "object": "application",
+    "relation": "access",
+    "subject_id": "3d60a190-3c96-41e7-b177-3080df148ec2"
+  },
+  {
+    "namespace": "access",
+    "object": "application",
+    "relation": "access",
+    "subject_id": "3d60a190-3c96-41e7-b177-3080df148ec2"
+  }
+]
