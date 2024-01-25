@@ -1,3 +1,4 @@
 nohup.out
+.direnv/nix-profile*
 
 slurp.sh

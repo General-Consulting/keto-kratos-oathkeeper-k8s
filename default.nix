@@ -9,16 +9,20 @@ pkgs.mkShell {
     set -a
     source .env
 
-    SCRIPT_DIR=$PWD
-
-    minikube start
-    minikube addons enable ingress
 
     echo
     echo 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 
     echo 💡💡💡 General Consulting Dev Help 💡💡💡 
     echo 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 💡💡💡 
     echo
+    # Check if minikube is already running
+    if minikube status | grep -q "Running"; then
+        echo "minikube is already running."
+    else
+        echo "Starting minikube..."
+        minikube start
+        minikube addons enable ingress
+    fi
     echo run "minikube stop" to stop the cluster
     echo
     echo run "minikube dashboard" to bring up a general purpose web ui for monitoring your cluster.
