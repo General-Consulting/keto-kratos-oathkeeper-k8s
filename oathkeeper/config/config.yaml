@@ -8,6 +8,8 @@ serve:
     cors:
       enabled: true
       allowed_origins:
+        - "http://ory-admin.test.info"
+        - "http://ory.test.info"
         - "http://*.test.info"
       allowed_methods:
         - POST
