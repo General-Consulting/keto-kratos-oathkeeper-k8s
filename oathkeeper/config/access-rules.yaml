@@ -134,6 +134,11 @@
         }
   mutators:
     - handler: id_token
+    - handler: header
+      config:
+        headers:
+         Access-Control-Allow-Origin: "{{print .MatchContext.Header.Origin }}"
+
 
 - id: "ory:kratos-api:anonymous"
   upstream:

@@ -8,7 +8,7 @@ serve:
     cors:
       enabled: true
       allowed_origins:
-        - "*"
+        - "http://*.test.info"
       allowed_methods:
         - POST
         - GET
@@ -84,6 +84,11 @@ authorizers:
 mutators:
   noop:
     enabled: true
+  header:
+    enabled: true
+    config:
+      headers:
+        X-General: Consulting
   id_token:
     enabled: true
     config:

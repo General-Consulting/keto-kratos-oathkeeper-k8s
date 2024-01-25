@@ -2,9 +2,9 @@ version: v0.9.0-alpha.3
 dsn: fromEnv
 serve:
   public:
-    base_url: http://ory.test.info/.ory/kratos/public/
     cors:
       enabled: true
+    base_url: http://ory.test.info/.ory/kratos/public/
   admin:
     base_url: http://test-kratos-admin:4434/
 
