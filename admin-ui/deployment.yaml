@@ -20,7 +20,7 @@ spec:
       volumes:
         - name: script-volume
           configMap:
-            name: admin-ui-script
+            name: admin-ui-env
             defaultMode: 0777
       imagePullSecrets:  
         - name: dpr-secret 
@@ -28,6 +28,10 @@ spec:
         - name: admin-ui
           image: "ghcr.io/dfoxg/kratos-admin-ui:v2.2.0"
           imagePullPolicy: Always
+          volumeMounts:
+            - name: script-volume
+              mountPath: /usr/share/nginx/html/config.json
+              subPath: config.json
           envFrom:
             - configMapRef:
                 name: admin-ui-env

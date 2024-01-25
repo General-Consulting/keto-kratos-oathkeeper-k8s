@@ -35,15 +35,17 @@ To create a nice dev experience you should map your cluster ip to the DNS refere
 # waits for Keto to be ready and add policies
 $ ./add-keto-policies.sh | kubectl apply -f -
 $ kubectl get ingress
-NAME               CLASS    HOSTS            ADDRESS        PORTS   AGE
-fake-smtp-server   <none>   mail.test.info   192.168.XXX.XXX   80      119s
-oathkeeper         <none>   ory.test.info    192.168.XXX.XXX   80      119s
+NAME               CLASS    HOSTS                 ADDRESS           PORTS   AGE
+admin-ui-ingress   <none>   ory-admin.test.info   192.168.XXX.XXX   80      119s
+fake-smtp-server   <none>   mail.test.info        192.168.XXX.XXX   80      119s
+oathkeeper         <none>   ory.test.info         192.168.XXX.XXX   80      119s
 
 # add ingress to the hosts file
 $ sudo bash -c 'cat << EOF >> /etc/hosts
 # ORY Minikube SSO stack
 192.168.XXX.XXX    mail.test.info
 192.168.XXX.XXX    ory.test.info
+192.168.XXX.XXX    ory-admin.test.info
 EOF'
 ```
 

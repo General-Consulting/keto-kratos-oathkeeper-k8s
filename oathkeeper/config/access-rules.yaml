@@ -11,6 +11,7 @@
       - PUT
       - DELETE
       - PATCH
+      - OPTIONS
   authenticators:
     - handler: noop
   authorizer:
@@ -21,22 +22,23 @@
 - id: "ory:kratos:admin"
   upstream:
     preserve_host: true
-    url: "http://test-kratos-admin:4434/admin/"
+    url: "http://test-kratos-admin:4434"
     strip_path: /.ory/kratos/private
   match:
-    url: "http://ory.test.info/.ory/kratos/private/<**>"
+    url: "http://ory.test.info/.ory/kratos/private<**>"
     methods:
       - GET
       - POST
       - PUT
       - DELETE
       - PATCH
+      - OPTIONS
   authenticators:
     - handler: cookie_session
   authorizer:
     handler: remote_json
     config:
-      remote: http://keto-api:4456/check
+      remote: http://keto-api:4456/relation-tuples/check
       payload: |
         {
           "namespace": "access",
@@ -51,9 +53,8 @@
   upstream:
     preserve_host: true
     url: "http://admin-ui:3000"
-    strip_path: /admin
   match:
-    url: "http://ory.test.info/admin/<**>"
+    url: "http://ory.test.info/config.json"
     methods:
       - GET
   authenticators:
@@ -61,7 +62,7 @@
   authorizer:
     handler: remote_json
     config:
-      remote: http://keto-api:4456/check
+      remote: http://keto-api:4456/relation-tuples/check
       payload: |
         {
           "namespace": "access",
@@ -76,13 +77,87 @@
       config:
         to: http://ory.test.info/panel/welcome
 
+- id: "ory:kratos-admin-ui-node:protected"
+  upstream:
+    preserve_host: true
+    url: "http://admin-ui:3000"
+  match:
+    url: "http://ory-admin.test.info/identities<**>"
+    methods:
+      - GET
+  authenticators:
+    - handler: cookie_session
+  authorizer:
+    handler: remote_json
+    config:
+      remote: http://keto-api:4456/relation-tuples/check
+      payload: |
+        {
+          "namespace": "access",
+          "object": "administration",
+          "relation": "access",
+          "subject_id": "{{print .Extra.identity.id }}"
+        }
+  mutators:
+    - handler: id_token
+  errors:
+    - handler: redirect
+      config:
+        to: http://ory.test.info/panel/welcome
+
+- id: "ory:kratos-api:protected"
+  upstream:
+    preserve_host: true
+    url: "http://selfservice:4455"
+    strip_path: /api/admin
+  match:
+    url: "http://ory-admin.test.info/api/admin{**}"
+    methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
+      - OPTIONS
+  authenticators:
+    - handler: cookie_session
+  authorizer:
+    handler: remote_json
+    config:
+      remote: http://keto-api:4456/relation-tuples/check
+      payload: |
+        {
+          "namespace": "access",
+          "object": "administration",
+          "relation": "access",
+          "subject_id": "{{print .Extra.identity.id }}"
+        }
+  mutators:
+    - handler: id_token
+
+- id: "ory:kratos-api:anonymous"
+  upstream:
+    preserve_host: true
+    url: "http://selfservice:4455"
+    strip_path: /api/public
+  match:
+    url: "http://ory.test.info/api/public/{**}"
+    methods:
+      - GET
+  authenticators:
+    - handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+
 - id: "ory:kratos-selfservice-ui-node:anonymous"
   upstream:
     preserve_host: true
     url: "http://selfservice:4455"
     strip_path: /panel
   match:
-    url: "http://ory.test.info/panel/<{welcome,registration,verification,recovery,login,**.css,**.js,**.png,**.ttf,**.svg,**.woff,**.woff2}{/,}>"
+    url: "http://ory.test.info/panel/<{welcome,sessions,registration,verification,recovery,login,**.css,**.js,**.png,**.ttf,**.svg,**.woff,**.woff2}{/,}>"
     methods:
       - GET
   authenticators:
@@ -106,7 +181,7 @@
   authorizer:
     handler: remote_json
     config:
-      remote: http://keto-api:4456/check
+      remote: http://keto-api:4456/relation-tuples/check
       payload: |
         {
           "namespace": "access",

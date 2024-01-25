@@ -10,3 +10,6 @@ configMapGenerator:
   - name: admin-ui-env
     envs:
       - config/admin-ui.env
+    files:
+      - config.json=config/config.json
+      

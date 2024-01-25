@@ -1,0 +1,5 @@
+{
+   "kratosAdminURL": "http://ory.test.info/.ory/kratos/private",
+   "kratosPublicURL": "http://ory.test.info/.ory/kratos/public",
+   "reverseProxy": false
+}
