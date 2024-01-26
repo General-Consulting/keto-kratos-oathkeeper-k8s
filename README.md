@@ -97,8 +97,8 @@ $ ./add-keto-policies.sh | kubectl apply -f -
 ```
 
 ### Debugging
-
-- Bring up a dashboard for the cluster with `minikube-dashboard`
+- Start fresh with `minikube delete`
+- Bring up a dashboard for the cluster with `minikube dashboard`
 ![image](https://github.com/General-Consulting/keto-kratos-oathkeeper-k8s/assets/143022822/08f08543-d0b4-4d7b-8cf9-82394c772c19)
 
 - Get a db shell with [./_scripts/get_psql.sh](./_scripts/get_psql.sh)
