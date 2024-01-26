@@ -83,8 +83,10 @@ After you have created a user, using the identity.id as the subject, you can add
 And then update the keto policies.
 
 
+```sh
 # waits for Keto to be ready and add policies
 $ ./add-keto-policies.sh | kubectl apply -f -
+```
 
 ### Debugging
 
