@@ -15,3 +15,8 @@ configMapGenerator:
   - name: keto-config
     files:
       - keto.yaml=config/keto.yaml
+
+images:
+  - name: keto
+    newName: "oryd/keto"
+    newTag: "latest"

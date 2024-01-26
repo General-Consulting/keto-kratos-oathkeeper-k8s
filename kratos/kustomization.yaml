@@ -19,3 +19,8 @@ configMapGenerator:
   - name: kratos-identity
     files:
       - identity.schema.json=config/identity.schema.json
+
+images:
+  - name: kratos
+    newName: "oryd/kratos"
+    newTag: "v1.0.0"

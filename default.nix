@@ -1,10 +1,11 @@
 { pkgs ? import <nixpkgs> { } }:
 let
   k8s = pkgs.minikube;
+  postgres = pkgs.postgresql_16;
 in
 pkgs.mkShell {
   name = "gencon pdf infra";
-  packages = [k8s pkgs.kustomize];
+  packages = [k8s pkgs.kustomize postgres];
   shellHook = ''
     set -a
     source .env
