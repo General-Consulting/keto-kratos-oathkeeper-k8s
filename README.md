@@ -21,15 +21,15 @@ the reality of how the stack works)_
 ### Initial Setup
 
 #### Step 1 Bootstrap the cluster
-```bash
-$ nix default.nix
+```sh
+$ nix-build default.nix
 
-# Create all resources
+# Create cluster resources
 $ ./build.sh | kubectl apply -f -
 ```
 #### Step 2 DNS Setup
 
-To create a nice dev experience you should map your cluster ip to the DNS referenced within the examples.  `kubectl get ingress`  will give you the IP, which should be added to your host file.
+Map your ingress ip to the DNS referenced within the examples.  `kubectl get ingress`  will give you the IP, which should be added to your host file.
 
 ```
 $ kubectl get ingress
