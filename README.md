@@ -22,11 +22,19 @@ the reality of how the stack works)_
 
 #### Step 1 Bootstrap the cluster
 ```sh
+# Get all prerequisites
 $ nix-build default.nix
+
+# Start cluster
+minikube start
+
+# Enable ingress
+minikube addons enable ingress
 
 # Create cluster resources
 $ ./build.sh | kubectl apply -f -
 ```
+
 #### Step 2 DNS Setup
 
 Map your ingress ip to the DNS referenced within the examples.  `kubectl get ingress`  will give you the IP, which should be added to your host file.
