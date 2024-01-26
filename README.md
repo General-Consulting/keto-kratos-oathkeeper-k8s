@@ -16,9 +16,9 @@ the reality of how the stack works)_
 
 ### Prerequisites
 
-- [nix](https://nixos.org/download)
+- [nix package manager](https://nixos.org/download)
 
-### Run locally
+### Initial Setup
 
 #### Step 1 Bootstrap the cluster
 ```bash
@@ -32,8 +32,6 @@ $ ./build.sh | kubectl apply -f -
 To create a nice dev experience you should map your cluster ip to the DNS referenced within the examples.  `kubectl get ingress`  will give you the IP, which should be added to your host file.
 
 ```
-# waits for Keto to be ready and add policies
-$ ./add-keto-policies.sh | kubectl apply -f -
 $ kubectl get ingress
 NAME               CLASS    HOSTS                 ADDRESS           PORTS   AGE
 admin-ui-ingress   <none>   ory-admin.test.info   192.168.XXX.XXX   80      119s
@@ -63,8 +61,7 @@ $ kubectl create secret docker-registry dpr-secret --docker-server=https://ghcr.
 ```
 
 
-
-#### Using
+#### Step 4 Create a test user.
 
 Open your browser and navigate to `http://ory.test.info/panel/welcome` and
 `http://mail.test.info`.
@@ -80,7 +77,16 @@ react app.
 | http://ory.test.info/admin/        | Admin react app, you need the role `admin` to access      |
 | http://mail.test.info              | Local mail panel, you will receive mail confirmation here |
 
-#### Add keto relationships
+##### Add keto relationships
 
 After you have created a user, using the identity.id as the subject, you can add relations into [./keto/keto-job/config/relation-tuples/admin-access.json](./keto/keto-job/config/relation-tuples/admin-access.json)
+And then update the keto policies.
 
+
+# waits for Keto to be ready and add policies
+$ ./add-keto-policies.sh | kubectl apply -f -
+
+### Debugging
+
+- Bring up a dashboard for the cluster with `minikube-dashboard`
+- Get a db shell with [./_scripts/get_psql.sh](./_scripts/get_psql.sh)

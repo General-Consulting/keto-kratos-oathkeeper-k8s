@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
 let
   k8s = pkgs.minikube;
-  postgres = pkgs.postgresql_16;
+  postgres = pkgs.postgresql_14;
 in
 pkgs.mkShell {
   name = "gencon pdf infra";
